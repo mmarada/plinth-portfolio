@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0}
+  body{background:var(--paper);font-family:var(--font-sans);padding:26px 30px}
+  .row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+  button{font-family:var(--font-sans);font-size:14px;font-weight:600;border-radius:6px;border:1px solid transparent;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:all var(--dur-fast) var(--ease-out)}
+  .primary{background:var(--accent);color:#fff}
+  .primary:hover{background:var(--accent-hover)}
+  .secondary{background:var(--surface);color:var(--ink);border-color:var(--line-2)}
+  .secondary:hover{background:var(--paper-2)}
+  .ghost{background:transparent;color:var(--ink)}
+  .ghost:hover{background:var(--paper-2)}
+  .icon{padding:9px;border-radius:6px}
+  .pill{border-radius:999px}
+  i{width:16px;height:16px}
+  .lab{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-3);margin:0 0 12px}
+</style></head>
+<body>
+  <p class="lab">Buttons</p>
+  <div class="row">
+    <button class="primary">Publish</button>
+    <button class="primary"><i data-lucide="upload"></i>Upload work</button>
+    <button class="secondary">Save to collection</button>
+    <button class="secondary pill"><i data-lucide="plus"></i>Follow</button>
+    <button class="ghost"><i data-lucide="share"></i>Share</button>
+    <button class="secondary icon"><i data-lucide="bookmark"></i></button>
+    <button class="secondary icon"><i data-lucide="more-horizontal"></i></button>
+  </div>
+  <div class="row">
+    <button class="primary" style="opacity:.45;cursor:not-allowed">Disabled</button>
+    <button class="secondary" style="font-size:12px;padding:6px 12px">Small</button>
+    <button class="primary" style="font-size:16px;padding:12px 22px">Large</button>
+  </div>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>lucide.createIcons();</script>
+</body></html>

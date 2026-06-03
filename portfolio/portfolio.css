@@ -1,0 +1,51 @@
+/* ============================================================================
+   PLINTH PORTFOLIO — shared foundations for the 4 case-study apps
+   "Ornament meets gallery": Indian folk jewel tones × Seattle contemporary calm.
+   ============================================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+:root{
+  --font-display:'Newsreader', Georgia, serif;
+  --font-sans:'Schibsted Grotesk', system-ui, sans-serif;
+  --font-mono:'Space Mono', ui-monospace, monospace;
+
+  /* Jewel — Indian folk art */
+  --indigo:#1B2A6B; --indigo-2:#2D3F8F; --vermillion:#D7382A; --sindoor:#E0543A;
+  --marigold:#E8A11C; --turmeric:#F2B705; --malachite:#1F7A5A; --jade:#2F5D50;
+  --lapis:#2A5C9E; --gold:#C99A2E; --terracotta:#B5582F; --maroon:#6E1E2A;
+  --cream:#FBF4E6; --cream-2:#F3E7CE; --rose:#C9476B; --ink:#1A1410;
+
+  /* Gallery — Seattle contemporary */
+  --concrete:#E7E4DD; --concrete-2:#CFCBC2; --slate:#3A3D42;
+  --off-white:#F4F3F0; --charcoal:#1F2124;
+
+  --ease:cubic-bezier(0.22,1,0.36,1);
+  --ease-in-out:cubic-bezier(0.65,0,0.35,1);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:var(--font-sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+
+/* gallery wall background that the phones sit on */
+.gallery-floor{
+  min-height:100vh; width:100%;
+  background:
+    radial-gradient(120% 80% at 50% -10%, #efe9dc 0%, #e7e0d0 55%, #ddd4c0 100%);
+  display:flex; align-items:center; justify-content:center;
+}
+
+/* utility */
+.mono-label{font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase}
+.serif{font-family:var(--font-display)}
+.tabnum{font-variant-numeric:tabular-nums}
+
+/* fade/slide entrance used across apps */
+@keyframes riseIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes scaleIn{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
+@keyframes spinSlow{to{transform:rotate(360deg)}}
+.rise{animation:riseIn .5s var(--ease) both}
+
+::-webkit-scrollbar{width:0;height:0}
+button{font-family:inherit;cursor:pointer;border:none;background:none}

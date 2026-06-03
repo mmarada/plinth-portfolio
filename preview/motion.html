@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0}
+  body{background:var(--paper);font-family:var(--font-mono);padding:26px 30px}
+  .lab{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-3);margin-bottom:18px}
+  .track{position:relative;height:8px;background:var(--paper-2);border-radius:999px;margin:30px 0 8px}
+  .dot{position:absolute;top:50%;width:18px;height:18px;border-radius:50%;background:var(--accent);transform:translate(-50%,-50%);left:6%;animation:run 2.6s var(--ease-out) infinite alternate}
+  @keyframes run{to{left:94%}}
+  .meta{display:flex;gap:34px;font-size:10px;color:var(--fg-3);letter-spacing:.04em;margin-top:18px}
+  .meta b{color:var(--ink);display:block;font-size:11px;letter-spacing:.02em;margin-top:3px}
+  @media (prefers-reduced-motion:reduce){.dot{animation:none;left:70%}}
+</style></head>
+<body>
+  <div class="lab">Motion · easing & duration</div>
+  <div class="track"><span class="dot"></span></div>
+  <div class="meta">
+    <span>ease-out<b>cubic-bezier(.22,1,.36,1)</b></span>
+    <span>fast<b>140ms</b></span>
+    <span>base<b>220ms</b></span>
+    <span>slow<b>420ms</b></span>
+  </div>
+</body></html>

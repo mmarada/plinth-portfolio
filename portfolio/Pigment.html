@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pigment — Purchase · Plinth Portfolio</title>
+<link rel="stylesheet" href="portfolio.css">
+<style>html,body{background:#e7e0d0}</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+<script type="text/babel">
+// ── frame.jsx ──────────────────────────────────────────────────────────────
+function StatusBar({ tint = 'dark', time = '9:41' }) {
+  const c = tint === 'light' ? '#fff' : 'var(--ink)';
+  return (
+    <div style={{ position:'absolute',top:0,left:0,right:0,height:54,zIndex:40,display:'flex',alignItems:'center',justifyContent:'space-between',padding:'16px 30px 0',pointerEvents:'none' }}>
+      <span style={{ fontFamily:'var(--font-sans)',fontWeight:700,fontSize:15,color:c,letterSpacing:'.02em' }}>{time}</span>
+      <div style={{ display:'flex',gap:6,alignItems:'center' }}>
+        <svg width="18" height="11" viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx=".6" fill={c}/><rect x="4.5" y="4.5" width="3" height="6.5" rx=".6" fill={c}/><rect x="9" y="2" width="3" height="9" rx=".6" fill={c}/><rect x="13.5" y="0" width="3" height="11" rx=".6" fill={c} fillOpacity=".4"/></svg>
+        <svg width="16" height="11" viewBox="0 0 16 11"><path d="M8 2.8c2.1 0 4 .8 5.4 2.2l1-1C12.7 2.2 10.4 1.1 8 1.1S3.3 2.2 1.6 4l1 1C4 3.6 5.9 2.8 8 2.8z" fill={c}/><path d="M8 6.1c1.2 0 2.3.5 3.1 1.3l1-1C11 5.3 9.6 4.7 8 4.7s-3 .6-4.1 1.7l1 1C5.7 6.6 6.8 6.1 8 6.1z" fill={c}/><circle cx="8" cy="9.4" r="1.3" fill={c}/></svg>
+        <svg width="25" height="12" viewBox="0 0 25 12"><rect x=".5" y=".5" width="21" height="11" rx="3" stroke={c} strokeOpacity=".4" fill="none"/><rect x="2" y="2" width="16" height="8" rx="1.6" fill={c}/><path d="M23 4v4c.7-.3 1.2-1 1.2-2S23.7 4.3 23 4z" fill={c} fillOpacity=".5"/></svg>
+      </div>
+    </div>
+  );
+}
+
+function PhoneFrame({ children, tint = 'dark', bg = '#000', w = 390, h = 844, shadow = true }) {
+  return (
+    <div style={{ width:w,height:h,borderRadius:54,position:'relative',background:bg,overflow:'hidden',boxShadow:shadow?'0 50px 100px -20px rgba(40,28,12,.45), 0 0 0 10px #14110c, 0 0 0 12px #2a241a':'none',fontFamily:'var(--font-sans)',flexShrink:0 }}>
+      <div style={{ position:'absolute',top:12,left:'50%',transform:'translateX(-50%)',width:116,height:34,borderRadius:20,background:'#000',zIndex:50 }} />
+      <StatusBar tint={tint} />
+      <div style={{ position:'absolute',inset:0,overflow:'hidden' }}>{children}</div>
+      <div style={{ position:'absolute',bottom:8,left:'50%',transform:'translateX(-50%)',width:134,height:5,borderRadius:100,background:tint==='light'?'rgba(255,255,255,.65)':'rgba(20,16,10,.32)',zIndex:60,pointerEvents:'none' }} />
+    </div>
+  );
+}
+
+function Dots({ n, i, color = 'var(--ink)', dim = 'rgba(0,0,0,.18)' }) {
+  return (
+    <div style={{ display:'flex',gap:6,alignItems:'center' }}>
+      {Array.from({ length:n }).map((_,k) => (
+        <div key={k} style={{ height:6,borderRadius:99,width:k===i?20:6,background:k===i?color:dim,transition:'all .35s var(--ease)' }} />
+      ))}
+    </div>
+  );
+}
+
+function AppButton({ children, onClick, bg = 'var(--ink)', color = 'var(--cream)', style = {}, ghost = false, disabled = false }) {
+  const [press, setPress] = React.useState(false);
+  const base = ghost ? { background:'transparent',color:bg,border:'1.5px solid currentColor' } : { background:bg,color };
+  return (
+    <button onClick={disabled?undefined:onClick}
+      onPointerDown={() => setPress(true)} onPointerUp={() => setPress(false)} onPointerLeave={() => setPress(false)}
+      style={{ width:'100%',height:56,borderRadius:16,fontFamily:'var(--font-sans)',fontSize:16,fontWeight:600,letterSpacing:'.01em',display:'flex',alignItems:'center',justifyContent:'center',gap:9,transition:'transform .12s var(--ease), opacity .2s, filter .15s',transform:press?'translateY(1px) scale(.99)':'none',filter:press?'brightness(.94)':'none',opacity:disabled?.4:1,cursor:disabled?'not-allowed':'pointer',...base,...style }}>{children}</button>
+  );
+}
+
+function Stamp({ children, color = 'var(--gold)', style = {} }) {
+  return <div className="mono-label" style={{ color,...style }}>{children}</div>;
+}
+
+function Stage({ width, height, children, bg = 'radial-gradient(120% 80% at 50% -10%, #efe9dc 0%, #e7e0d0 55%, #ddd4c0 100%)' }) {
+  const [s, setS] = React.useState(1);
+  React.useEffect(() => {
+    const fit = () => setS(Math.min(1, (window.innerWidth - 32) / width, (window.innerHeight - 32) / height));
+    fit(); window.addEventListener('resize', fit); return () => window.removeEventListener('resize', fit);
+  }, [width, height]);
+  return (
+    <div style={{ width:'100vw',height:'100vh',overflow:'hidden',display:'flex',alignItems:'center',justifyContent:'center',background:bg }}>
+      <div style={{ width,height,transform:`scale(${s})`,transformOrigin:'center center',position:'relative',flexShrink:0 }}>{children}</div>
+    </div>
+  );
+}
+
+// ── pigment.jsx ────────────────────────────────────────────────────────────
+const { useState } = React;
+const PA = 'assets/art/';
+
+const PNOTES = [
+  { stage:'Desire', n:'01', title:'Sell the edition, not the object', body:'Each print carries an edition number and the work fills the frame. Scarcity plus a visible price up front sets the value before anyone taps in.' },
+  { stage:'Configure', n:'02', title:'Price every decision, live', body:'Size and frame update the total in place — no surprises waiting at checkout. Mismatched expectations on price are the top reason a cart is abandoned.' },
+  { stage:'Review', n:'03', title:'Keep the summary honest', body:'Shipping and totals appear before the form, never after. Hidden costs revealed late are the single biggest driver of drop-off; we front-load the truth.' },
+  { stage:'Checkout', n:'04', title:'One screen, fewest fields', body:'Guest checkout, a persistent order summary, and only the fields a parcel truly needs. Every removed input is momentum kept toward the tap.' },
+  { stage:'After', n:'05', title:'Design the wait', body:'Concrete next steps — framed to order, ships in 3–5 days, tracking to follow — turn a payment into a calm, confident wait instead of a question.' },
+];
+
+const PRINTS = [
+  { k:'surya',   img:'surya-indigo.png',       title:'Surya, at the Threshold', artist:'Madhubani workshop', base:185, ed:'120' },
+  { k:'lotus',   img:'lotus-maroon.png',        title:'Lotus, Sixfold',          artist:'R. Devi',            base:165, ed:'90' },
+  { k:'torana',  img:'torana-day.png',           title:'Torana, Noon',            artist:'Studio Kalā',        base:195, ed:'75' },
+  { k:'mandala', img:'mandala-jade.png',         title:'Mandala in Jade',         artist:'A. Pal',             base:175, ed:'110' },
+  { k:'field',   img:'cont-2.png',              title:'Field No. 4',             artist:'M. Okafor',          base:210, ed:'40' },
+  { k:'plume',   img:'fan-indigo.png',           title:'Plume',                   artist:'Studio Kalā',        base:160, ed:'150' },
+];
+const SIZES  = [{ k:'A3', label:'A3 · 30×42cm', add:0 }, { k:'A2', label:'A2 · 42×59cm', add:60 }, { k:'A1', label:'A1 · 59×84cm', add:135 }];
+const FRAMES = [{ k:'none', label:'Unframed', add:0 }, { k:'oak', label:'Oak', add:60 }, { k:'black', label:'Black ash', add:60 }];
+const money = n => '$' + n;
+
+function Shop({ open, cartN }) {
+  const feat = PRINTS[0];
+  return (
+    <div style={{ position:'absolute',inset:0,background:'var(--cream)',display:'flex',flexDirection:'column' }} className="rise">
+      <div style={{ padding:'64px 24px 14px',display:'flex',justifyContent:'space-between',alignItems:'flex-end' }}>
+        <div><Stamp color="var(--terracotta)">Pigment · Editions</Stamp><div className="serif" style={{ fontSize:27,fontWeight:500,color:'var(--ink)',marginTop:3 }}>The print shop</div></div>
+        <div style={{ position:'relative',width:40,height:40,borderRadius:12,background:'#fff',border:'1px solid var(--cream-2)',display:'grid',placeItems:'center' }}>
+          <svg width="18" height="18" viewBox="0 0 24 24"><path d="M6 7h13l-1.5 9.5a2 2 0 01-2 1.5H9.5a2 2 0 01-2-1.7L6 4H3" fill="none" stroke="var(--ink)" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          {cartN > 0 && <span style={{ position:'absolute',top:-5,right:-5,width:18,height:18,borderRadius:9,background:'var(--vermillion)',color:'#fff',fontSize:11,fontWeight:700,display:'grid',placeItems:'center' }}>{cartN}</span>}
+        </div>
+      </div>
+      <div style={{ flex:1,overflow:'auto',padding:'6px 24px 24px' }}>
+        <button onClick={() => open(feat)} style={{ width:'100%',textAlign:'left',borderRadius:16,overflow:'hidden',position:'relative',marginBottom:18,boxShadow:'0 14px 32px rgba(110,30,42,.16)',padding:0,display:'block' }}>
+          <img src={PA+feat.img} style={{ width:'100%',height:260,objectFit:'cover',display:'block' }} />
+          <div style={{ position:'absolute',inset:0,background:'linear-gradient(to top, rgba(26,20,16,.78), transparent 55%)' }} />
+          <div style={{ position:'absolute',left:16,right:16,bottom:14,color:'#fff',display:'flex',justifyContent:'space-between',alignItems:'flex-end' }}>
+            <div><div className="mono-label" style={{ color:'var(--marigold)' }}>Edition of {feat.ed}</div><div className="serif" style={{ fontSize:21,fontWeight:500,fontStyle:'italic' }}>{feat.title}</div></div>
+            <div style={{ fontWeight:700,fontSize:17 }}>{money(feat.base)}</div>
+          </div>
+        </button>
+        <div style={{ display:'grid',gridTemplateColumns:'1fr 1fr',gap:14 }}>
+          {PRINTS.slice(1).map(p => (
+            <button key={p.k} onClick={() => open(p)} style={{ textAlign:'left',padding:0,display:'block' }}>
+              <div style={{ borderRadius:12,overflow:'hidden',aspectRatio:'4/5',boxShadow:'0 4px 14px rgba(110,30,42,.1)',marginBottom:8 }}><img src={PA+p.img} style={{ width:'100%',height:'100%',objectFit:'cover',display:'block' }} /></div>
+              <div style={{ fontWeight:600,fontSize:14,color:'var(--ink)',lineHeight:1.2 }}>{p.title}</div>
+              <div style={{ display:'flex',justifyContent:'space-between',marginTop:2 }}><span style={{ fontSize:12.5,color:'var(--maroon)',opacity:.6 }}>{p.artist}</span><span style={{ fontSize:13.5,fontWeight:700,color:'var(--ink)' }}>{money(p.base)}</span></div>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Product({ product, add }) {
+  const [size, setSize]   = useState('A2');
+  const [frame, setFrame] = useState('oak');
+  const total = product.base + SIZES.find(s => s.k === size).add + FRAMES.find(f => f.k === frame).add;
+  const Pills = ({ items, val, set }) => (
+    <div style={{ display:'flex',gap:8 }}>
+      {items.map(o => { const on = val === o.k; return (
+        <button key={o.k} onClick={() => set(o.k)} style={{ flex:1,padding:'10px 6px',borderRadius:12,border:'1.5px solid '+(on?'var(--ink)':'var(--cream-2)'),background:on?'var(--ink)':'#fff',color:on?'var(--cream)':'var(--ink)',fontSize:12.5,fontWeight:600,transition:'all .18s var(--ease)' }}>
+          <div>{o.label.split('·')[0]}</div>{o.add > 0 && <div style={{ fontSize:10.5,opacity:.6,fontFamily:'var(--font-mono)' }}>+${o.add}</div>}
+        </button>
+      ); })}
+    </div>
+  );
+  return (
+    <div style={{ position:'absolute',inset:0,background:'var(--cream)',display:'flex',flexDirection:'column' }} className="rise">
+      <div style={{ flex:1,overflow:'auto' }}>
+        <div style={{ position:'relative',padding:'64px 24px 0' }}>
+          <div style={{ borderRadius:16,overflow:'hidden',boxShadow:'0 18px 40px rgba(110,30,42,.18)',aspectRatio:'4/5' }}><img src={PA+product.img} style={{ width:'100%',height:'100%',objectFit:'cover' }} /></div>
+        </div>
+        <div style={{ padding:'18px 24px 12px' }}>
+          <Stamp color="var(--terracotta)">Edition of {product.ed} · signed</Stamp>
+          <h2 className="serif" style={{ fontSize:27,fontWeight:500,fontStyle:'italic',color:'var(--ink)',margin:'6px 0 2px',lineHeight:1.1 }}>{product.title}</h2>
+          <div style={{ fontSize:14,color:'var(--maroon)',opacity:.7,marginBottom:18 }}>{product.artist} · giclée on cotton rag</div>
+          <div className="mono-label" style={{ color:'rgba(26,20,16,.5)',marginBottom:9 }}>Size</div>
+          <Pills items={SIZES} val={size} set={setSize} />
+          <div className="mono-label" style={{ color:'rgba(26,20,16,.5)',margin:'16px 0 9px' }}>Frame</div>
+          <Pills items={FRAMES} val={frame} set={setFrame} />
+        </div>
+      </div>
+      <div style={{ borderTop:'1px solid var(--cream-2)',background:'var(--cream)',padding:'14px 24px 30px',display:'flex',gap:14,alignItems:'center' }}>
+        <div><div className="mono-label" style={{ color:'rgba(26,20,16,.45)' }}>Total</div><div className="serif tabnum" style={{ fontSize:26,color:'var(--ink)',transition:'all .2s' }}>{money(total)}</div></div>
+        <AppButton onClick={() => add({ ...product, size, frame, total })} bg="var(--vermillion)" color="#fff" style={{ flex:1,height:54 }}>Add to cart</AppButton>
+      </div>
+    </div>
+  );
+}
+
+function Cart({ item, checkout }) {
+  const ship = 12;
+  return (
+    <div style={{ position:'absolute',inset:0,background:'var(--cream)',padding:'78px 24px 30px',display:'flex',flexDirection:'column' }} className="rise">
+      <h2 className="serif" style={{ fontSize:30,fontWeight:500,color:'var(--ink)',margin:'0 0 18px',letterSpacing:'-.02em' }}>Your cart</h2>
+      <div style={{ display:'flex',gap:14,paddingBottom:18,borderBottom:'1px solid var(--cream-2)' }}>
+        <div style={{ width:84,height:105,borderRadius:10,overflow:'hidden',flexShrink:0,boxShadow:'0 6px 16px rgba(110,30,42,.14)' }}><img src={PA+item.img} style={{ width:'100%',height:'100%',objectFit:'cover' }} /></div>
+        <div style={{ flex:1 }}>
+          <div className="serif" style={{ fontSize:18,fontWeight:500,fontStyle:'italic',color:'var(--ink)' }}>{item.title}</div>
+          <div style={{ fontSize:13,color:'var(--maroon)',opacity:.65,margin:'2px 0 8px' }}>{item.artist}</div>
+          <div style={{ display:'inline-flex',gap:6,flexWrap:'wrap' }}>
+            <span className="mono-label" style={{ background:'#fff',border:'1px solid var(--cream-2)',borderRadius:6,padding:'3px 8px',color:'var(--ink)' }}>{item.size}</span>
+            <span className="mono-label" style={{ background:'#fff',border:'1px solid var(--cream-2)',borderRadius:6,padding:'3px 8px',color:'var(--ink)' }}>{FRAMES.find(f => f.k===item.frame).label}</span>
+          </div>
+          <div style={{ fontWeight:700,fontSize:16,color:'var(--ink)',marginTop:8 }}>{money(item.total)}</div>
+        </div>
+      </div>
+      <div style={{ flex:1 }} />
+      <div style={{ display:'flex',flexDirection:'column',gap:9,marginBottom:16 }}>
+        {[['Subtotal', money(item.total)], ['Framing & shipping', money(ship)], ['Tax', 'at checkout']].map(([l,v]) => (
+          <div key={l} style={{ display:'flex',justifyContent:'space-between',fontSize:14.5,color:'var(--maroon)' }}><span style={{ opacity:.7 }}>{l}</span><span className="tabnum" style={{ fontWeight:600 }}>{v}</span></div>
+        ))}
+        <div style={{ display:'flex',justifyContent:'space-between',fontSize:18,color:'var(--ink)',paddingTop:9,borderTop:'1px solid var(--cream-2)',marginTop:4 }}><span className="serif" style={{ fontWeight:500 }}>Total</span><span className="serif tabnum" style={{ fontWeight:500 }}>{money(item.total+ship)}</span></div>
+      </div>
+      <AppButton onClick={checkout} bg="var(--ink)" color="var(--cream)">Checkout</AppButton>
+    </div>
+  );
+}
+
+function Checkout({ item, pay }) {
+  const ship = 12, total = item.total + ship;
+  const F = ({ label, val, w = '100%' }) => (
+    <div style={{ width:w }}><label className="mono-label" style={{ color:'rgba(26,20,16,.5)',display:'block',marginBottom:6 }}>{label}</label>
+      <input defaultValue={val} style={{ width:'100%',height:48,borderRadius:12,border:'1.5px solid var(--cream-2)',background:'#fff',padding:'0 14px',fontSize:15,fontFamily:'var(--font-sans)',color:'var(--ink)',outline:'none',boxSizing:'border-box' }} onFocus={e => e.target.style.borderColor='var(--vermillion)'} onBlur={e => e.target.style.borderColor='var(--cream-2)'} /></div>
+  );
+  return (
+    <div style={{ position:'absolute',inset:0,background:'var(--cream)',display:'flex',flexDirection:'column' }} className="rise">
+      <div style={{ flex:1,overflow:'auto',padding:'78px 24px 12px' }}>
+        <h2 className="serif" style={{ fontSize:28,fontWeight:500,color:'var(--ink)',margin:'0 0 16px',letterSpacing:'-.02em' }}>Checkout</h2>
+        <div style={{ display:'flex',alignItems:'center',gap:12,background:'#fff',border:'1px solid var(--cream-2)',borderRadius:12,padding:10,marginBottom:18 }}>
+          <div style={{ width:40,height:50,borderRadius:7,overflow:'hidden' }}><img src={PA+item.img} style={{ width:'100%',height:'100%',objectFit:'cover' }} /></div>
+          <div style={{ flex:1,fontSize:13.5,color:'var(--ink)' }}><b>{item.title}</b><div style={{ color:'var(--maroon)',opacity:.6 }}>{item.size} · {FRAMES.find(f => f.k===item.frame).label}</div></div>
+          <div className="tabnum" style={{ fontWeight:700,color:'var(--ink)' }}>{money(item.total)}</div>
+        </div>
+        <div className="mono-label" style={{ color:'var(--terracotta)',marginBottom:10 }}>Ship to</div>
+        <div style={{ display:'flex',flexDirection:'column',gap:11 }}>
+          <F label="Email" val="aria@example.com" />
+          <F label="Full name" val="Aria Mehta" />
+          <F label="Address" val="1300 1st Ave" />
+          <div style={{ display:'flex',gap:11 }}><F label="City" val="Seattle" w="55%" /><F label="ZIP" val="98101" w="45%" /></div>
+        </div>
+        <div className="mono-label" style={{ color:'var(--terracotta)',margin:'18px 0 10px' }}>Payment</div>
+        <F label="Card number" val="4242 4242 4242 4242" />
+      </div>
+      <div style={{ borderTop:'1px solid var(--cream-2)',padding:'14px 24px 30px',display:'flex',gap:14,alignItems:'center' }}>
+        <div><div className="mono-label" style={{ color:'rgba(26,20,16,.45)' }}>Pay total</div><div className="serif tabnum" style={{ fontSize:24,color:'var(--ink)' }}>{money(total)}</div></div>
+        <AppButton onClick={pay} bg="var(--vermillion)" color="#fff" style={{ flex:1,height:54 }}>Pay {money(total)}</AppButton>
+      </div>
+    </div>
+  );
+}
+
+function Confirm({ item, restart }) {
+  return (
+    <div style={{ position:'absolute',inset:0,background:'var(--jade)',padding:'78px 30px 36px',display:'flex',flexDirection:'column',color:'var(--cream)' }} className="rise">
+      <div style={{ flex:1,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',textAlign:'center' }}>
+        <div style={{ width:74,height:74,borderRadius:'50%',background:'var(--marigold)',display:'grid',placeItems:'center',marginBottom:24,animation:'scaleIn .5s var(--ease) both' }}>
+          <svg width="34" height="34" viewBox="0 0 34 34"><path d="M8 18l6 6 12-14" stroke="var(--jade)" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+        </div>
+        <Stamp color="var(--marigold)" style={{ marginBottom:8 }}>Order PG-4417 · confirmed</Stamp>
+        <h2 className="serif" style={{ fontSize:30,fontWeight:500,margin:'0 0 12px' }}>It's on its way</h2>
+        <p style={{ fontSize:15,lineHeight:1.55,color:'rgba(251,244,230,.78)',maxWidth:290,margin:0 }}><i>{item.title}</i>, framed to order. Printed and dispatched from Seattle in <b style={{ color:'var(--cream)' }}>3–5 days</b> — tracking lands in your inbox.</p>
+      </div>
+      <div style={{ background:'rgba(0,0,0,.18)',borderRadius:14,padding:'14px 16px',display:'flex',alignItems:'center',gap:12,marginBottom:16 }}>
+        <div style={{ width:38,height:48,borderRadius:7,overflow:'hidden' }}><img src={PA+item.img} style={{ width:'100%',height:'100%',objectFit:'cover' }} /></div>
+        <div style={{ flex:1,fontSize:13.5 }}><b>{item.title}</b><div style={{ opacity:.7 }}>{item.size} · {FRAMES.find(f => f.k===item.frame).label}</div></div>
+        <div className="tabnum" style={{ fontWeight:700 }}>{money(item.total+12)}</div>
+      </div>
+      <AppButton onClick={restart} bg="var(--marigold)" color="var(--jade)">Back to the shop</AppButton>
+    </div>
+  );
+}
+
+function Placard({ note, on }) {
+  return (
+    <div style={{ width:340,flexShrink:0,opacity:on?1:0,transform:on?'none':'translateX(-12px)',transition:'opacity .4s var(--ease), transform .4s var(--ease)',pointerEvents:on?'auto':'none' }}>
+      <div style={{ background:'var(--off-white)',border:'1px solid rgba(26,20,16,.12)',borderLeft:'3px solid var(--vermillion)',padding:'22px 24px',borderRadius:4,boxShadow:'0 18px 40px rgba(40,28,12,.1)' }}>
+        <div style={{ display:'flex',justifyContent:'space-between',alignItems:'baseline',marginBottom:14 }}>
+          <span className="mono-label" style={{ color:'var(--vermillion)' }}>Purchase · {note.stage}</span>
+          <span className="mono-label tabnum" style={{ color:'rgba(26,20,16,.4)' }}>{note.n}/05</span>
+        </div>
+        <h3 className="serif" style={{ fontSize:23,fontWeight:500,lineHeight:1.18,color:'var(--ink)',margin:'0 0 10px' }}>{note.title}</h3>
+        <p style={{ fontSize:14.5,lineHeight:1.6,color:'rgba(26,20,16,.66)',margin:0 }}>{note.body}</p>
+        <div style={{ marginTop:16,paddingTop:14,borderTop:'1px solid rgba(26,20,16,.1)',fontSize:12.5,color:'rgba(26,20,16,.45)',fontStyle:'italic',fontFamily:'var(--font-display)' }}>Pigment — purchase · curator's note</div>
+      </div>
+    </div>
+  );
+}
+
+function PigmentApp() {
+  const [step, setStep]       = useState(0);
+  const [notes, setNotes]     = useState(true);
+  const [product, setProduct] = useState(PRINTS[0]);
+  const [item, setItem]       = useState(null);
+  const open    = p  => { setProduct(p); setStep(1); };
+  const add     = it => { setItem(it); setStep(2); };
+  const restart = () => { setItem(null); setStep(0); };
+  const screens = [
+    <Shop open={open} cartN={item ? 1 : 0} />,
+    <Product product={product} add={add} />,
+    item && <Cart item={item} checkout={() => setStep(3)} />,
+    item && <Checkout item={item} pay={() => setStep(4)} />,
+    item && <Confirm item={item} restart={restart} />,
+  ];
+  const tint = ['dark','dark','dark','dark','light'][step];
+  const back = () => setStep(s => Math.max(0, s-1));
+  return (
+    <Stage width={830} height={960}>
+      <div style={{ position:'absolute',inset:0,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',gap:26 }}>
+        <div style={{ display:'flex',alignItems:'center',gap:40 }}>
+          <PhoneFrame tint={tint} bg="#000">{screens[step]}</PhoneFrame>
+          <Placard note={PNOTES[step]} on={notes} />
+        </div>
+        <div style={{ display:'flex',alignItems:'center',gap:18 }}>
+          <Dots n={5} i={step} color="var(--vermillion)" dim="rgba(110,30,42,.2)" />
+          <div style={{ width:1,height:18,background:'rgba(26,20,16,.15)' }} />
+          <button onClick={() => setNotes(v => !v)} className="mono-label" style={{ display:'flex',alignItems:'center',gap:8,color:notes?'var(--vermillion)':'rgba(26,20,16,.45)' }}>
+            <span style={{ width:30,height:17,borderRadius:99,background:notes?'var(--vermillion)':'rgba(26,20,16,.2)',position:'relative',transition:'background .25s' }}>
+              <span style={{ position:'absolute',top:2,left:notes?15:2,width:13,height:13,borderRadius:'50%',background:'#fff',transition:'left .25s var(--ease)' }} />
+            </span>
+            Designer's notes
+          </button>
+          {step > 0 && <button onClick={back} className="mono-label" style={{ color:'rgba(26,20,16,.4)' }}>← Back</button>}
+        </div>
+      </div>
+    </Stage>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<PigmentApp />);
+</script>
+</body>
+</html>

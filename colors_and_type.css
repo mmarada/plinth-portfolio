@@ -1,0 +1,268 @@
+/* ============================================================================
+   PLINTH — Design System Foundations
+   colors_and_type.css
+
+   "Where the work goes on display."
+   A digital gallery for designers. Warm-paper neutrals, editorial type,
+   one confident vermillion accent. The UI is the gallery wall — quiet,
+   so the work on it is loud.
+   ============================================================================ */
+
+/* ---- Fonts (Google Fonts CDN — see README "Font substitution" note) -------- */
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+  /* ===== TYPE FAMILIES ===================================================== */
+  --font-display: 'Newsreader', Georgia, 'Times New Roman', serif;     /* editorial headlines */
+  --font-sans:    'Schibsted Grotesk', system-ui, -apple-system, sans-serif; /* UI + body */
+  --font-mono:    'Space Mono', ui-monospace, 'SF Mono', Menlo, monospace;   /* catalog labels, meta */
+
+  /* ===== TYPE SCALE (fluid-ish, fixed here) =============================== */
+  --text-2xs: 11px;
+  --text-xs:  12px;
+  --text-sm:  14px;
+  --text-base:16px;
+  --text-md:  18px;
+  --text-lg:  22px;
+  --text-xl:  28px;
+  --text-2xl: 36px;
+  --text-3xl: 48px;
+  --text-4xl: 64px;
+  --text-5xl: 88px;
+
+  --leading-tight: 1.04;
+  --leading-snug:  1.18;
+  --leading-normal:1.5;
+  --leading-relaxed:1.65;
+
+  --tracking-tight:  -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide:   0.04em;
+  --tracking-label:  0.16em;   /* mono catalog labels */
+
+  /* ===== COLOR — CORE NEUTRALS (warm paper gallery) ====================== */
+  --paper:    #FBF8F2;  /* page background — warm gallery paper */
+  --paper-2:  #F4EFE6;  /* sunken / alt rows */
+  --surface:  #FFFFFF;  /* cards, raised surfaces */
+  --ink:      #16140F;  /* primary text — warm near-black */
+  --fg-1:     #16140F;
+  --fg-2:     #57534A;  /* secondary text */
+  --fg-3:     #8C8678;  /* muted / meta */
+  --fg-4:     #B4AE9F;  /* faint / placeholder */
+  --line:     #E7E1D4;  /* hairline borders */
+  --line-2:   #D8D1C1;  /* stronger borders */
+
+  /* ===== COLOR — ACCENT (vermillion) ===================================== */
+  --accent:        #E0543A;  /* primary brand accent */
+  --accent-hover:  #C8442D;  /* press / hover */
+  --accent-soft:   #FBE7DF;  /* tinted fills, badges */
+  --accent-ink:    #8F2E1C;  /* accent text on light */
+
+  /* ===== COLOR — SECONDARY (gallery green, used sparingly) =============== */
+  --jade:      #2F5D50;
+  --jade-soft: #E2ECE7;
+
+  /* ===== COLOR — SEMANTIC ================================================ */
+  --success:      #3E7D5A;
+  --success-soft: #E3EFE7;
+  --warning:      #C58A2E;
+  --warning-soft: #F6ECD6;
+  --danger:       #C0392B;
+  --danger-soft:  #F7E3DF;
+  --info:         #3A6EA5;
+  --info-soft:    #E2EAF3;
+
+  /* ===== RADII =========================================================== */
+  --r-xs:  3px;
+  --r-sm:  6px;
+  --r-md:  10px;
+  --r-lg:  16px;
+  --r-xl:  24px;
+  --r-pill: 999px;
+
+  /* ===== SPACING (4px base) ============================================== */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+  --sp-9: 96px;
+  --sp-10:128px;
+
+  /* ===== ELEVATION (soft, warm-tinted — gallery lighting) =============== */
+  --shadow-xs: 0 1px 2px rgba(34, 28, 16, 0.06);
+  --shadow-sm: 0 1px 3px rgba(34, 28, 16, 0.08), 0 1px 2px rgba(34, 28, 16, 0.04);
+  --shadow-md: 0 4px 16px rgba(34, 28, 16, 0.08), 0 1px 3px rgba(34, 28, 16, 0.05);
+  --shadow-lg: 0 12px 40px rgba(34, 28, 16, 0.12), 0 2px 8px rgba(34, 28, 16, 0.06);
+  --shadow-xl: 0 28px 70px rgba(34, 28, 16, 0.18);
+
+  /* ===== MOTION ========================================================== */
+  --ease-out:  cubic-bezier(0.22, 1, 0.36, 1);   /* default — confident settle */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 140ms;
+  --dur-base: 220ms;
+  --dur-slow: 420ms;
+
+  /* ===== MISC ============================================================ */
+  --maxw: 1280px;       /* content max width */
+  --maxw-text: 680px;   /* prose measure */
+  --focus-ring: 0 0 0 3px rgba(224, 84, 58, 0.35);
+}
+
+/* ============================================================================
+   DARK — "Night at the gallery". Premium, moody, high-contrast.
+   Apply with [data-theme="dark"] on <html> or any container.
+   ============================================================================ */
+[data-theme="dark"] {
+  --paper:   #141310;
+  --paper-2: #1B1915;
+  --surface: #201E18;
+  --ink:     #F2EDE2;
+  --fg-1:    #F2EDE2;
+  --fg-2:    #B4AC9C;
+  --fg-3:    #847C6D;
+  --fg-4:    #5A5448;
+  --line:    #2C2920;
+  --line-2:  #3A362B;
+
+  --accent-soft: #3A201A;
+  --accent-ink:  #F2A18C;
+  --jade-soft:   #1C2A25;
+
+  --success-soft: #18271E;
+  --warning-soft: #2A2212;
+  --danger-soft:  #2C1714;
+  --info-soft:    #15212E;
+
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.4);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.45), 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.5), 0 1px 3px rgba(0,0,0,0.35);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.4);
+  --shadow-xl: 0 28px 70px rgba(0,0,0,0.7);
+}
+
+/* ============================================================================
+   SEMANTIC ELEMENT STYLES
+   Use these classes (or copy the rules) for consistent type treatment.
+   ============================================================================ */
+
+.plinth-display {            /* hero / exhibition title */
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--text-5xl);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink);
+}
+
+.plinth-h1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--text-3xl);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink);
+}
+
+.plinth-h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--text-2xl);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink);
+}
+
+.plinth-h3 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: var(--text-lg);
+  line-height: var(--leading-snug);
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.plinth-h4 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: var(--text-md);
+  line-height: var(--leading-snug);
+  color: var(--ink);
+}
+
+.plinth-lead {               /* intro paragraph */
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-xl);
+  line-height: var(--leading-snug);
+  color: var(--fg-2);
+}
+
+.plinth-body {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--fg-2);
+}
+
+.plinth-small {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--fg-3);
+}
+
+/* Eyebrow / catalog label — the signature Plinth detail */
+.plinth-label {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+
+/* Catalog number — e.g. "No. 014 / 240" */
+.plinth-catalog {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: var(--text-2xs);
+  letter-spacing: var(--tracking-wide);
+  color: var(--fg-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.plinth-quote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--text-2xl);
+  line-height: var(--leading-snug);
+  color: var(--ink);
+}
+
+.plinth-code {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xs);
+  padding: 0.1em 0.4em;
+  color: var(--ink);
+}
+
+a.plinth-link {
+  color: var(--ink);
+  text-decoration: none;
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-size: 100% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size var(--dur-base) var(--ease-out), color var(--dur-fast);
+}
+a.plinth-link:hover { color: var(--accent); background-size: 100% 1.5px; }

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mohan Marada — Product Designer · Plinth</title>
+<link rel="stylesheet" href="portfolio/portfolio.css">
+<style>
+  body{ background:var(--cream); color:var(--ink); }
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 40px; }
+  a{ color:inherit; text-decoration:none; }
+
+  /* top bar */
+  .topbar{ position:sticky; top:0; z-index:30; background:rgba(251,244,230,.82); backdrop-filter:blur(12px); border-bottom:1px solid rgba(26,20,16,.1); }
+  .topbar .wrap{ display:flex; align-items:center; justify-content:space-between; height:64px; }
+  .brand{ display:flex; align-items:center; gap:9px; font-family:var(--font-display); font-weight:600; font-size:19px; }
+  .brand img{ width:24px; height:24px; }
+  .nav{ display:flex; align-items:center; gap:28px; }
+  .nav a{ font-size:14px; font-weight:500; color:var(--maroon); opacity:.8; transition:opacity .2s; }
+  .nav a:hover{ opacity:1; color:var(--vermillion); }
+  .btn-follow{ background:var(--ink); color:var(--cream); padding:9px 18px; border-radius:99px; font-size:13.5px; font-weight:600; }
+
+  /* hero */
+  .hero{ padding:84px 0 70px; display:grid; grid-template-columns:1.45fr 1fr; gap:64px; align-items:center; }
+  .eyebrow{ display:flex; align-items:center; gap:12px; margin-bottom:22px; }
+  .eyebrow .dot{ width:7px; height:7px; border-radius:50%; background:var(--success,#3E7D5A); }
+  .hero h1{ font-family:var(--font-display); font-weight:500; font-size:clamp(48px,6vw,82px); line-height:.98; letter-spacing:-.025em; margin:0 0 22px; }
+  .hero h1 em{ font-style:italic; color:var(--vermillion); }
+  .hero .lead{ font-size:18px; line-height:1.6; color:var(--maroon); max-width:480px; margin:0 0 30px; }
+  .hero .cta{ display:flex; gap:14px; align-items:center; flex-wrap:wrap; }
+  .cta .primary{ background:var(--vermillion); color:#fff; padding:14px 24px; border-radius:14px; font-weight:600; font-size:15px; display:inline-flex; align-items:center; gap:8px; transition:transform .15s var(--ease), filter .15s; }
+  .cta .primary:hover{ filter:brightness(.94); transform:translateY(-1px); }
+  .cta .ghost{ font-weight:600; font-size:15px; color:var(--ink); border-bottom:1.5px solid var(--gold); padding-bottom:2px; }
+  .portrait{ position:relative; }
+  .portrait image-slot{ width:100%; aspect-ratio:4/5; display:block; box-shadow:0 30px 60px rgba(110,30,42,.2); }
+  .portrait .cap{ position:absolute; left:-14px; bottom:24px; background:var(--ink); color:var(--cream); padding:8px 14px; border-radius:8px; box-shadow:0 10px 24px rgba(0,0,0,.25); }
+  .stats{ border-top:1px solid rgba(26,20,16,.14); border-bottom:1px solid rgba(26,20,16,.14); padding:22px 0; display:flex; gap:46px; }
+  .stats .s b{ display:block; font-family:var(--font-display); font-size:30px; font-weight:500; }
+  .stats .s span{ font-family:var(--font-mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--fg-3,#8C8678); }
+
+  /* section heading */
+  .sec-head{ display:flex; align-items:flex-end; justify-content:space-between; margin:84px 0 32px; padding-bottom:18px; border-bottom:1px solid rgba(26,20,16,.16); }
+  .sec-head h2{ font-family:var(--font-display); font-weight:500; font-size:38px; letter-spacing:-.02em; margin:0; }
+
+  /* work grid */
+  .work{ display:grid; grid-template-columns:1fr 1fr; gap:30px; }
+  .case{ display:block; border-radius:18px; overflow:hidden; background:var(--surface,#fff); border:1px solid rgba(26,20,16,.1); box-shadow:0 1px 3px rgba(26,20,16,.06); transition:transform .35s var(--ease), box-shadow .35s var(--ease); }
+  .case:hover{ transform:translateY(-6px); box-shadow:0 26px 56px rgba(110,30,42,.18); }
+  .case .thumb{ position:relative; aspect-ratio:16/10; overflow:hidden; }
+  .case .thumb img{ width:100%; height:100%; object-fit:cover; transition:transform .6s var(--ease); }
+  .case:hover .thumb img{ transform:scale(1.05); }
+  .case .thumb .meta{ position:absolute; inset:auto 0 0 0; padding:18px 20px; display:flex; justify-content:space-between; align-items:flex-end; background:linear-gradient(to top, rgba(26,20,16,.72), transparent); }
+  .case .flow{ font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--marigold); }
+  .case .no{ font-family:var(--font-mono); font-size:12px; color:rgba(255,255,255,.65); }
+  .case .body{ padding:22px 22px 24px; }
+  .case .body h3{ font-family:var(--font-display); font-weight:500; font-size:26px; margin:0 0 6px; letter-spacing:-.01em; }
+  .case .body p{ font-size:14.5px; line-height:1.55; color:var(--maroon); opacity:.82; margin:0 0 16px; }
+  .case .foot{ display:flex; align-items:center; justify-content:space-between; }
+  .chip{ font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--vermillion); background:var(--accent-soft,#FBE7DF); padding:5px 11px; border-radius:99px; }
+  .open{ font-size:14px; font-weight:600; color:var(--ink); display:inline-flex; align-items:center; gap:6px; }
+  .case:hover .open .arr{ transform:translateX(4px); }
+  .open .arr{ transition:transform .25s var(--ease); }
+
+  /* approach */
+  .approach{ display:grid; grid-template-columns:repeat(3,1fr); gap:34px; margin-bottom:30px; }
+  .col .k{ font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--terracotta); margin-bottom:14px; }
+  .col h4{ font-family:var(--font-display); font-weight:500; font-size:24px; letter-spacing:-.01em; margin:0 0 10px; }
+  .col p{ font-size:15px; line-height:1.62; color:var(--maroon); opacity:.85; margin:0; }
+
+  /* footer */
+  footer{ margin-top:90px; background:var(--ink); color:var(--cream); }
+  footer .wrap{ padding-top:70px; padding-bottom:54px; }
+  footer h2{ font-family:var(--font-display); font-weight:500; font-style:italic; font-size:clamp(36px,5vw,60px); letter-spacing:-.02em; margin:0 0 28px; line-height:1.04; }
+  footer h2 a{ border-bottom:2px solid var(--marigold); }
+  .footrow{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px; padding-top:36px; border-top:1px solid rgba(251,244,230,.18); }
+  .footrow .l{ display:flex; gap:24px; }
+  .footrow a{ font-size:14px; color:rgba(251,244,230,.7); transition:color .2s; }
+  .footrow a:hover{ color:var(--marigold); }
+  .footrow .mono{ font-family:var(--font-mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:rgba(251,244,230,.5); }
+
+  .reveal{ opacity:0; transform:translateY(20px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
+  .reveal.in{ opacity:1; transform:none; }
+
+  @media(max-width:900px){
+    .hero{ grid-template-columns:1fr; gap:36px; } .portrait{ max-width:360px; }
+    .work,.approach{ grid-template-columns:1fr; } .nav .hide{ display:none; }
+    .wrap{ padding:0 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="assets/plinth-logomark.svg" alt="">Plinth</a>
+    <nav class="nav">
+      <a class="hide" href="#work">Work</a>
+      <a class="hide" href="#approach">Approach</a>
+      <a class="hide" href="#contact">Contact</a>
+      <a class="btn-follow" href="#contact">Follow</a>
+    </nav>
+  </div>
+</div>
+
+<a id="top"></a>
+<div class="wrap">
+  <section class="hero">
+    <div>
+      <div class="eyebrow"><span class="dot"></span><span class="mono-label" style="color:var(--maroon)">Product Designer · Seattle · Open to work</span></div>
+      <h1>Mohan Marada designs <em>habits</em>, not just screens.</h1>
+      <p class="lead">A product designer working where behavioral science meets craft. I build onboarding, signup, purchase and learning flows — and obsess over the words inside them. Below: four prototypes you can actually click through.</p>
+      <div class="cta">
+        <a class="primary" href="#work">See the work <span>→</span></a>
+        <a class="ghost" href="#approach">How I think</a>
+      </div>
+    </div>
+    <div class="portrait reveal">
+      <img src="portfolio/assets/art/cont-4.png" alt="Mohan Marada" style="width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:18px;display:block;box-shadow:0 30px 60px rgba(110,30,42,.2);">
+      <div class="cap mono-label" style="color:var(--marigold)">Mohan Marada</div>
+    </div>
+  </section>
+
+  <section class="stats reveal">
+    <div class="s"><b>4</b><span>Case studies</span></div>
+    <div class="s"><b>Hook</b><span>Model practitioner</span></div>
+    <div class="s"><b>UX + Words</b><span>Content design led</span></div>
+    <div class="s"><b>6 yrs</b><span>Shipping product</span></div>
+  </section>
+
+  <section id="work">
+    <div class="sec-head reveal">
+      <h2>Selected work</h2>
+      <span class="mono-label" style="color:var(--fg-3,#8C8678)">No.01 — 04 · click to open</span>
+    </div>
+    <div class="work">
+
+      <a class="case reveal" href="portfolio/Rasa.html">
+        <div class="thumb"><img src="portfolio/assets/art/surya-indigo.png" alt="Rasa">
+          <div class="meta"><span class="flow">Onboarding</span><span class="no">No. 01</span></div>
+        </div>
+        <div class="body">
+          <h3>Rasa</h3>
+          <p>A daily art-ritual app whose onboarding is built screen-by-screen on the Hook Model — trigger, action, variable reward, investment.</p>
+          <div class="foot"><span class="chip">Hooked · habit loop</span><span class="open">Open prototype <span class="arr">→</span></span></div>
+        </div>
+      </a>
+
+      <a class="case reveal" href="portfolio/Cascade.html">
+        <div class="thumb"><img src="portfolio/assets/art/cont-3.png" alt="Cascade">
+          <div class="meta"><span class="flow">Account signup</span><span class="no">No. 02</span></div>
+        </div>
+        <div class="body">
+          <h3>Cascade</h3>
+          <p>A Seattle contemporary-museum membership join flow — designed for trust and momentum, with the free tier priced as honestly as the paid ones.</p>
+          <div class="foot"><span class="chip">Conversion · trust</span><span class="open">Open prototype <span class="arr">→</span></span></div>
+        </div>
+      </a>
+
+      <a class="case reveal" href="portfolio/Pigment.html">
+        <div class="thumb"><img src="portfolio/assets/art/lotus-maroon.png" alt="Pigment">
+          <div class="meta"><span class="flow">Purchase</span><span class="no">No. 03</span></div>
+        </div>
+        <div class="body">
+          <h3>Pigment</h3>
+          <p>A limited-edition art-print checkout where every size and frame choice re-prices live, and the order summary is honest before the form — not after.</p>
+          <div class="foot"><span class="chip">E-commerce · checkout</span><span class="open">Open prototype <span class="arr">→</span></span></div>
+        </div>
+      </a>
+
+      <a class="case reveal" href="portfolio/Sutra.html">
+        <div class="thumb"><img src="portfolio/assets/art/mandala-vermillion.png" alt="Sutra">
+          <div class="meta"><span class="flow">Educational</span><span class="no">No. 04</span></div>
+        </div>
+        <div class="body">
+          <h3>Sūtra</h3>
+          <p>A guided lesson on reading Madhubani painting — chunked teaching, tap-to-learn interaction, and a low-stakes check that teaches by testing.</p>
+          <div class="foot"><span class="chip">Learning · content design</span><span class="open">Open prototype <span class="arr">→</span></span></div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <section id="approach">
+    <div class="sec-head reveal"><h2>How I work</h2><span class="mono-label" style="color:var(--fg-3,#8C8678)">A point of view</span></div>
+    <div class="approach">
+      <div class="col reveal">
+        <div class="k">01 · Habit by design</div>
+        <h4>Loops, not funnels</h4>
+        <p>I design with Nir Eyal’s Hook Model in hand — trigger, action, variable reward, investment. Every flow here is annotated with the behavioral reasoning behind each screen, because retention is a design decision long before it’s a metric.</p>
+      </div>
+      <div class="col reveal">
+        <div class="k">02 · Ornament meets gallery</div>
+        <h4>A real aesthetic point of view</h4>
+        <p>My visual language pulls from Indian folk painting — Madhubani suns, Pichwai lotuses — and the calm of Seattle’s contemporary museums. Rich work on quiet walls. Strong illustration earns attention; restraint keeps it.</p>
+      </div>
+      <div class="col reveal">
+        <div class="k">03 · Words are the interface</div>
+        <h4>Content design, not copy-paste</h4>
+        <p>A button label can win or lose a signup. I treat microcopy as a primary surface — plain language, benefit-first framing, error prevention over error messages. The clearest interface is usually a sentence, well chosen.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2>Let’s make something<br>worth <a href="mailto:mokarma@uw.edu">putting on a wall.</a></h2>
+    <div class="footrow">
+      <div class="l">
+        <a href="mailto:mokarma@uw.edu">mokarma@uw.edu</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">Read.cv</a>
+      </div>
+      <span class="mono">© 2026 Mohan Marada · Made on Plinth</span>
+    </div>
+  </div>
+</footer>
+
+<script src="portfolio/image-slot.js"></script>
+<script>
+  const io = new IntersectionObserver((es) => {
+    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

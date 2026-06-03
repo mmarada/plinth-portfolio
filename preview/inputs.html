@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0}
+  body{background:var(--paper);font-family:var(--font-sans);padding:24px 30px;display:grid;grid-template-columns:1fr 1fr;gap:18px 22px}
+  label{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-3);display:block;margin-bottom:7px}
+  input,select{width:100%;box-sizing:border-box;font-family:var(--font-sans);font-size:14px;padding:10px 12px;border-radius:8px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);outline:none;transition:box-shadow var(--dur-fast),border-color var(--dur-fast)}
+  input:focus{border-color:var(--accent);box-shadow:var(--focus-ring)}
+  .field-icon{position:relative}
+  .field-icon i{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--fg-3)}
+  .field-icon input{padding-left:34px}
+  .search{border-radius:999px}
+  .toggle{display:flex;align-items:center;gap:10px}
+  .sw{width:40px;height:23px;border-radius:999px;background:var(--accent);position:relative;flex:none}
+  .sw::after{content:"";position:absolute;top:2px;right:2px;width:19px;height:19px;border-radius:50%;background:#fff;box-shadow:var(--shadow-sm)}
+  .toggle span{font-size:13px;color:var(--fg-2)}
+</style></head>
+<body>
+  <div><label>Project title</label><input value="Quiet Type — a specimen"></div>
+  <div><label>Discipline</label><select><option>Type Design</option><option>Branding</option></select></div>
+  <div class="field-icon"><label>Search</label><i data-lucide="search"></i><input class="search" placeholder="Search work, makers, collections"></div>
+  <div><label>Visibility</label><div class="toggle" style="margin-top:9px"><span class="sw"></span><span>Public · on view</span></div></div>
+  <script src="https://unpkg.com/lucide@latest"></script><script>lucide.createIcons();</script>
+</body></html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0}
+  body{background:var(--paper);font-family:var(--font-sans);padding:24px 28px}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .card{border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+  .bar{height:46px}
+  .meta{padding:9px 11px;background:var(--surface)}
+  .lab{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+  .hex{font-family:var(--font-mono);font-size:10px;color:var(--fg-3)}
+  .pill{display:inline-block;margin-top:5px;font-size:11px;padding:2px 8px;border-radius:999px}
+</style></head>
+<body>
+  <div class="grid">
+    <div class="card"><div class="bar" style="background:var(--success)"></div><div class="meta"><div class="lab">Success</div><div class="hex">#3E7D5A</div><span class="pill" style="background:var(--success-soft);color:var(--success)">Published</span></div></div>
+    <div class="card"><div class="bar" style="background:var(--warning)"></div><div class="meta"><div class="lab">Warning</div><div class="hex">#C58A2E</div><span class="pill" style="background:var(--warning-soft);color:var(--warning)">Draft</span></div></div>
+    <div class="card"><div class="bar" style="background:var(--danger)"></div><div class="meta"><div class="lab">Danger</div><div class="hex">#C0392B</div><span class="pill" style="background:var(--danger-soft);color:var(--danger)">Removed</span></div></div>
+    <div class="card"><div class="bar" style="background:var(--info)"></div><div class="meta"><div class="lab">Info</div><div class="hex">#3A6EA5</div><span class="pill" style="background:var(--info-soft);color:var(--info)">In review</span></div></div>
+  </div>
+</body></html>

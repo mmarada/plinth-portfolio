@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0}
+  body{background:var(--paper);font-family:var(--font-mono);padding:24px 28px}
+  .row{display:flex;gap:12px}
+  .big{flex:1.4;border-radius:10px;background:var(--accent);color:#fff;padding:16px;display:flex;flex-direction:column;justify-content:space-between;min-height:108px}
+  .big .lab{font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+  .big .hex{font-size:18px;font-weight:700}
+  .col{display:flex;flex-direction:column;gap:10px;flex:1}
+  .sw{display:flex;align-items:center;gap:10px}
+  .dot{width:40px;height:40px;border-radius:8px;border:1px solid rgba(34,28,16,.12);flex:none}
+  .t{font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink)}
+  .t small{display:block;color:var(--fg-3);letter-spacing:0;text-transform:none}
+</style></head>
+<body>
+  <div class="row">
+    <div class="big"><span class="lab">Accent · Vermillion</span><span class="hex">#E0543A</span></div>
+    <div class="col">
+      <div class="sw"><span class="dot" style="background:var(--accent-hover)"></span><span class="t">Accent hover<small>#C8442D</small></span></div>
+      <div class="sw"><span class="dot" style="background:var(--accent-soft)"></span><span class="t">Accent soft<small>#FBE7DF</small></span></div>
+    </div>
+    <div class="col">
+      <div class="sw"><span class="dot" style="background:var(--accent-ink)"></span><span class="t">Accent ink<small>#8F2E1C</small></span></div>
+      <div class="sw"><span class="dot" style="background:var(--jade)"></span><span class="t">Jade<small>#2F5D50</small></span></div>
+    </div>
+  </div>
+</body></html>

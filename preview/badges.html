@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0}
+  body{background:var(--paper);font-family:var(--font-sans);padding:24px 30px}
+  .lab{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-3);margin:0 0 12px}
+  .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+  .tag{font-size:13px;color:var(--fg-2);border:1px solid var(--line-2);border-radius:999px;padding:5px 13px}
+  .tag.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .badge{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:999px}
+  .featured{background:var(--accent);color:#fff}
+  .draft{background:var(--warning-soft);color:var(--warning)}
+  .new{background:var(--jade-soft);color:var(--jade)}
+  .count{display:inline-flex;align-items:center;gap:5px;font-size:13px;color:var(--fg-2)}
+  .count i{width:15px;height:15px}
+  .count .heart{color:var(--accent)}
+</style></head>
+<body>
+  <p class="lab">Filter tags</p>
+  <div class="row">
+    <span class="tag on">All work</span><span class="tag">Branding</span><span class="tag">Type</span><span class="tag">Motion</span><span class="tag">3D</span><span class="tag">Editorial</span>
+  </div>
+  <p class="lab">Status badges & counts</p>
+  <div class="row">
+    <span class="badge featured">Featured</span>
+    <span class="badge draft">Draft</span>
+    <span class="badge new">New</span>
+    <span class="count"><i data-lucide="heart" class="heart" fill="currentColor"></i>1.2k</span>
+    <span class="count"><i data-lucide="eye"></i>18.4k</span>
+    <span class="count"><i data-lucide="message-circle"></i>48</span>
+  </div>
+  <script src="https://unpkg.com/lucide@latest"></script><script>lucide.createIcons();</script>
+</body></html>

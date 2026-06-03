@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0}
+  body{background:var(--paper);font-family:var(--font-mono);padding:24px 28px}
+  .grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+  .sw{display:flex;flex-direction:column;gap:7px}
+  .chip{height:64px;border-radius:8px;border:1px solid rgba(34,28,16,.10)}
+  .n{font-size:10px;letter-spacing:.04em;color:var(--ink);text-transform:uppercase}
+  .h{font-size:10px;color:var(--fg-3)}
+</style></head>
+<body>
+  <div class="grid">
+    <div class="sw"><div class="chip" style="background:var(--paper)"></div><span class="n">Paper</span><span class="h">#FBF8F2</span></div>
+    <div class="sw"><div class="chip" style="background:var(--paper-2)"></div><span class="n">Paper 2</span><span class="h">#F4EFE6</span></div>
+    <div class="sw"><div class="chip" style="background:var(--surface)"></div><span class="n">Surface</span><span class="h">#FFFFFF</span></div>
+    <div class="sw"><div class="chip" style="background:var(--line)"></div><span class="n">Line</span><span class="h">#E7E1D4</span></div>
+    <div class="sw"><div class="chip" style="background:var(--fg-3)"></div><span class="n">FG-3</span><span class="h">#8C8678</span></div>
+    <div class="sw"><div class="chip" style="background:var(--fg-2)"></div><span class="n">FG-2</span><span class="h">#57534A</span></div>
+  </div>
+  <div style="height:12px"></div>
+  <div class="grid">
+    <div class="sw"><div class="chip" style="background:var(--ink)"></div><span class="n">Ink / FG-1</span><span class="h">#16140F</span></div>
+    <div class="sw"></div><div class="sw"></div><div class="sw"></div><div class="sw"></div><div class="sw"></div>
+  </div>
+</body></html>
